@@ -7,15 +7,17 @@ def local_time(counter):
     return f'(LAMPORT_TIME={counter}, LOCAL_TIME={datetime.now()})'
 
 def calc_recv_timestamp(recv_time_stamp, counter):
-    return max(recv_time_stamp, counter) + 1
+    for pid in range(len(counter)):
+        counter[pid] = max(recv_time_stamp[pid], counter[pid])
+    return counter
 
 def event(pid, counter):
-    counter += 1
+    counter[pid] += 1
     print(f'{local_time(counter)}: An event happened in {pid}')
     return counter
 
 def send_message(pipe, pid, counter):
-    counter += 1
+    counter[pid] += 1
     pipe.send(('Empty shell', counter))
     print(f'{local_time(counter)}: Message sent from {str(pid)}')
     return counter
@@ -27,8 +29,8 @@ def recv_message(pipe, pid, counter):
     return counter
 
 def process_one(pipe12):
-    pid = getpid()
-    counter = 0
+    pid = 0
+    counter = [0, 0, 0]
     counter = event(pid, counter)
     counter = send_message(pipe12, pid, counter)
     counter  = event(pid, counter)
@@ -36,8 +38,8 @@ def process_one(pipe12):
     counter  = event(pid, counter)
 
 def process_two(pipe21, pipe23):
-    pid = getpid()
-    counter = 0
+    pid = 1
+    counter = [0, 0, 0]
     counter = recv_message(pipe21, pid, counter)
     counter = send_message(pipe21, pid, counter)
     counter = send_message(pipe23, pid, counter)
@@ -45,8 +47,8 @@ def process_two(pipe21, pipe23):
 
 
 def process_three(pipe32):
-    pid = getpid()
-    counter = 0
+    pid = 2
+    counter = [0, 0, 0]
     counter = recv_message(pipe32, pid, counter)
     counter = send_message(pipe32, pid, counter)
 
