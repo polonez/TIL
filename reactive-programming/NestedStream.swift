@@ -1,7 +1,3 @@
-/*
-
-*/
-
 import Combine
 
 func combine() {
@@ -35,30 +31,30 @@ func combine() {
 combine()
 
 
-//import RxSwift
-//
-//func rx() {
-//    let disposeBag = DisposeBag()
-//
-//    let ps = PublishSubject<PublishSubject<Int>>()
-//    let p1 = PublishSubject<Int>()
-//    let p2 = PublishSubject<Int>()
-//
-//    ps.flatMapLatest { $0 }
-//        .subscribe(onNext: { print($0) }, onCompleted: { print("completed") })
-//        .disposed(by: disposeBag)
-//
-//    ps.onNext(p1)
-//    p1.onNext(1)
-//    p2.onNext(2)
-//
-//    ps.onCompleted()
-//    p1.onNext(3)
-//    p2.onNext(4)
-//
-//    p1.onCompleted()
-//    p1.onNext(5)
-//    p2.onNext(6)
-//}
-//
-//rx()
+import RxSwift
+
+func rx() {
+    let disposeBag = DisposeBag()
+
+    let ps = PublishSubject<PublishSubject<Int>>()
+    let p1 = PublishSubject<Int>()
+    let p2 = PublishSubject<Int>()
+
+    ps.flatMapLatest { $0 }
+        .subscribe(onNext: { print($0) }, onCompleted: { print("completed") })
+        .disposed(by: disposeBag)
+
+    ps.onNext(p1)
+    p1.onNext(1)
+    p2.onNext(2)
+
+    ps.onCompleted()
+    p1.onNext(3)
+    p2.onNext(4)
+
+    p1.onCompleted()
+    p1.onNext(5)
+    p2.onNext(6)
+}
+
+rx()
