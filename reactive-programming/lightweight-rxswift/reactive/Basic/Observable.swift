@@ -26,7 +26,14 @@ extension ObservableType {
         return self.subscribe(observer)
     }
 
-    func subscribe(onNext: ((Element) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil) -> Disposable {
+    func subscribe(onNext: ((Element) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
+        let disposable: Disposable
+        if let disposed = onDisposed {
+            disposable = Disposables.create(with: disposed)
+        }
+        else {
+            disposable = Disposables.create()
+        }
 
         let obs = Observer<Element> { (event) in // Event<Observer<Element>.Element>
             switch event {
@@ -34,13 +41,14 @@ extension ObservableType {
                 onNext?(element)
             case .error(let error):
                 onError?(error)
-                onCompleted?()
+                disposable.dispose()
             case .completed:
                 onCompleted?()
+                disposable.dispose()
             }
         }
 
-        return subscribe(obs)
+        return Disposables.create(self.subscribe(obs), disposable)
     }
 
     func asObservable() -> Observable<Element> {
@@ -55,13 +63,17 @@ class Observable<E>: ObservableType {
     typealias SubscriptionHandler = ((Observer<Element>) -> Disposable)
 
     private let subscriptionHandler: SubscriptionHandler
+    private let scheduler: SchedulerType
 
-    init(_ subscriptionHandler: @escaping SubscriptionHandler) {
+    init(_ subscriptionHandler: @escaping SubscriptionHandler, scheduler: SchedulerType = CurrentThreadScheduler()) {
         self.subscriptionHandler = subscriptionHandler
+        self.scheduler = scheduler
     }
 
     func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
-        return subscriptionHandler(Observer(observer))
+//        return scheduler.schedule(()) { (_) -> Disposable in
+            return self.subscriptionHandler(Observer(observer))
+//        }
     }
 }
 

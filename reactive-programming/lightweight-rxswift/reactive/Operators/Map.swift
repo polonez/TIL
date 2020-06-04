@@ -16,20 +16,24 @@ private final class Map<SourceType, ResultType>: Observable<ResultType> {
     typealias Element = SourceType
     typealias Mapping = (SourceType) -> ResultType
 
-    init(source: Observable<SourceType>, mapping: @escaping Mapping) {
+    private let scheduler: SchedulerType
+
+    init(source: Observable<SourceType>, mapping: @escaping Mapping, scheduler: SchedulerType = CurrentThreadScheduler()) {
+        self.scheduler = scheduler
         let subscriptionHandler: SubscriptionHandler = { observer in
-            let obs = Observer<Element> { event in
-                switch event {
-                case let .next(element):
-                    observer.on(.next(mapping(element)))
-                case let .error(error):
-                    observer.on(.error(error))
-                    observer.on(.completed)
-                case .completed:
-                    observer.on(.completed)
+            return scheduler.schedule(()) { (_) -> Disposable in
+                let obs = Observer<Element> { event in
+                    switch event {
+                    case let .next(element):
+                        observer.on(.next(mapping(element)))
+                    case let .error(error):
+                        observer.on(.error(error))
+                    case .completed:
+                        observer.on(.completed)
+                    }
                 }
+                return source.subscribe(obs)
             }
-            return source.subscribe(obs)
         }
         super.init(subscriptionHandler)
     }

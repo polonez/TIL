@@ -20,43 +20,47 @@ class reactiveTests: XCTestCase {
     func testObservable() throws {
         let items = [1, 2, 3]
         var result = [Int]()
-        let disposable = Observable<Int>
+        let expectation = XCTestExpectation(description: "observable create")
+        Observable<Int>
             .create { (observer) -> Disposable in
                 for item in items {
                     observer.onNext(item)
                     Thread.sleep(forTimeInterval: 1)
                     print("sleep 1")
                 }
+                observer.onCompleted()
                 return Disposables.create()
             }
             .subscribe(onNext: { (value) in
                 result.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result, items)
+                expectation.fulfill()
             })
+            .disposed(by: disposeBag)
 
         print("outside")
-        disposable.disposed(by: disposeBag)
-
-        XCTAssertEqual(result, items)
-//        XCTAssertEqual(disposable.isDisposed, false)
-//        disposeBag = DisposeBag()
-//        XCTAssertEqual(disposable.isDisposed, true)
+        wait(for: [expectation], timeout: 5.0)
     }
 
     func testDisposed() throws {
         let values = [3, 2, 1]
         var result = [Int]()
+        let expectation = XCTestExpectation(description: "observable disposed")
         let disposable = Observable.from(values)
             .subscribe(onNext: { (value) in
                 result.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result, values)
+                expectation.fulfill()
             })
 
         disposable.disposed(by: disposeBag)
+        wait(for: [expectation], timeout: 3.0)
 
-        XCTAssertEqual(result, values)
-
-//        XCTAssertEqual(disposable.isDisposed, true)
-//        disposeBag = DisposeBag()
-//        XCTAssertEqual(disposable.isDisposed, true)
+        XCTAssertEqual(disposable.isDisposed, false)
+        disposeBag = DisposeBag()
+        XCTAssertEqual(disposable.isDisposed, true)
     }
 }
 
@@ -71,17 +75,22 @@ class reactiveOperatorsTests: XCTestCase {
     func testJust() throws {
         var result = [Int]()
         let items = [1, 3, 5]
+        let expectation = XCTestExpectation(description: "just")
         let disposable = Observable.just(items)
             .subscribe(onNext: { (value) in
                 result.append(contentsOf: value)
+            }, onCompleted: {
+                XCTAssertEqual(result, items)
+                expectation.fulfill()
             })
 
         disposable
             .disposed(by: disposeBag)
 
-        XCTAssertEqual(disposable.isDisposed, true)
+        wait(for: [expectation], timeout: 3.0)
 
-        XCTAssertEqual(result, items)
+        disposeBag = DisposeBag()
+        XCTAssertEqual(disposable.isDisposed, true)
     }
 
     func testFrom() throws {
@@ -99,20 +108,19 @@ class reactiveOperatorsTests: XCTestCase {
     func testMap() throws {
         let items = [1, 2, 3]
         var result = [Int]()
-        Observable<Int>
-            .create { (observer) -> Disposable in
-                for item in items {
-                    observer.onNext(item)
-                }
-                return Disposables.create()
-            }
+        let expectation = XCTestExpectation(description: "observable map")
+
+        Observable.from(items)
             .map { $0 * $0 }
             .subscribe(onNext: { (value) in
                 result.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result, items.map { $0 * $0 })
+                expectation.fulfill()
             })
             .disposed(by: disposeBag)
 
-        XCTAssertEqual(result, items.map { $0 * $0 })
+        wait(for: [expectation], timeout: 5.0)
     }
 
     func testMapError() throws {
@@ -121,6 +129,7 @@ class reactiveOperatorsTests: XCTestCase {
             case bar
         }
         var result = [Int]()
+        let expectation = XCTestExpectation(description: "observable map error")
         Observable<Int>
             .create { (observer) -> Disposable in
                 observer.onNext(1)
@@ -129,6 +138,7 @@ class reactiveOperatorsTests: XCTestCase {
                 observer.onNext(4)
                 observer.onNext(5)
                 observer.onError(ReactiveError.bar)
+                observer.onCompleted()
                 return Disposables.create()
             }
             .map { $0 * $0 }
@@ -151,9 +161,13 @@ class reactiveOperatorsTests: XCTestCase {
             })
             .subscribe(onNext: { (value) in
                 result.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result, [2, 5, 11, 17, 26, 20])
+                expectation.fulfill()
+            }, onDisposed: {
             })
             .disposed(by: disposeBag)
 
-        XCTAssertEqual(result, [2, 5, 11, 17, 26, 20])
+            wait(for: [expectation], timeout: 3.0)
     }
 }

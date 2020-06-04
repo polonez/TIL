@@ -25,6 +25,9 @@
 		B6379FA6248919190077FE0C /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FA5248919190077FE0C /* Zip.swift */; };
 		B6379FA8248919200077FE0C /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FA7248919200077FE0C /* Subject.swift */; };
 		B6379FAA248919270077FE0C /* Relay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FA9248919270077FE0C /* Relay.swift */; };
+		B6379FAD24893D3F0077FE0C /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FAC24893D3F0077FE0C /* Scheduler.swift */; };
+		B6379FAF248948100077FE0C /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FAE248948100077FE0C /* Delay.swift */; };
+		B6379FB124894F340077FE0C /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FB024894F340077FE0C /* Debug.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,9 @@
 		B6379FA5248919190077FE0C /* Zip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zip.swift; sourceTree = "<group>"; };
 		B6379FA7248919200077FE0C /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		B6379FA9248919270077FE0C /* Relay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relay.swift; sourceTree = "<group>"; };
+		B6379FAC24893D3F0077FE0C /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		B6379FAE248948100077FE0C /* Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
+		B6379FB024894F340077FE0C /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,7 @@
 				B6379F6F24867CFD0077FE0C /* Info.plist */,
 				B6379F952487D3640077FE0C /* Basic */,
 				B6379F942487D3470077FE0C /* Dispose */,
+				B6379FAB24893B3A0077FE0C /* Scheduler */,
 				B6379F912487D3090077FE0C /* Operators */,
 			);
 			path = reactive;
@@ -131,6 +138,8 @@
 				B6379FA5248919190077FE0C /* Zip.swift */,
 				B6379FA7248919200077FE0C /* Subject.swift */,
 				B6379FA9248919270077FE0C /* Relay.swift */,
+				B6379FAE248948100077FE0C /* Delay.swift */,
+				B6379FB024894F340077FE0C /* Debug.swift */,
 			);
 			path = Operators;
 			sourceTree = "<group>";
@@ -153,6 +162,14 @@
 				B6379F8724867D140077FE0C /* Observable.swift */,
 			);
 			path = Basic;
+			sourceTree = "<group>";
+		};
+		B6379FAB24893B3A0077FE0C /* Scheduler */ = {
+			isa = PBXGroup;
+			children = (
+				B6379FAC24893D3F0077FE0C /* Scheduler.swift */,
+			);
+			path = Scheduler;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,8 +291,11 @@
 				B6379F8A24867D1B0077FE0C /* Event.swift in Sources */,
 				B6379F9E248918F40077FE0C /* MapError.swift in Sources */,
 				B6379FA4248919120077FE0C /* CombineLatest.swift in Sources */,
+				B6379FAD24893D3F0077FE0C /* Scheduler.swift in Sources */,
 				B6379F972487D38E0077FE0C /* DisposeBag.swift in Sources */,
 				B6379F8624867D0F0077FE0C /* Observer.swift in Sources */,
+				B6379FAF248948100077FE0C /* Delay.swift in Sources */,
+				B6379FB124894F340077FE0C /* Debug.swift in Sources */,
 				B6379FA22489190A0077FE0C /* FlatMap.swift in Sources */,
 				B6379FA6248919190077FE0C /* Zip.swift in Sources */,
 				B6379F902487CB120077FE0C /* Just.swift in Sources */,

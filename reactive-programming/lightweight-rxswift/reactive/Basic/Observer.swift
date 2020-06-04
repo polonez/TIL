@@ -21,7 +21,6 @@ extension ObserverType {
 
     func onError(_ error: Swift.Error) {
         on(.error(error))
-        on(.completed)
     }
 
     func onCompleted() {
