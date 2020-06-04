@@ -12,8 +12,6 @@ extension ObservableType {
     }
 }
 
-// TODO: maperror, flatmap, combinelatest, zip, Subject
-
 private final class Map<SourceType, ResultType>: Observable<ResultType> {
     typealias Element = SourceType
     typealias Mapping = (SourceType) -> ResultType

@@ -19,6 +19,12 @@
 		B6379F932487D3210077FE0C /* From.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379F922487D3210077FE0C /* From.swift */; };
 		B6379F972487D38E0077FE0C /* DisposeBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379F962487D38E0077FE0C /* DisposeBag.swift */; };
 		B6379F992487D4C30077FE0C /* Disposables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379F982487D4C30077FE0C /* Disposables.swift */; };
+		B6379F9E248918F40077FE0C /* MapError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379F9D248918F40077FE0C /* MapError.swift */; };
+		B6379FA22489190A0077FE0C /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FA12489190A0077FE0C /* FlatMap.swift */; };
+		B6379FA4248919120077FE0C /* CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FA3248919120077FE0C /* CombineLatest.swift */; };
+		B6379FA6248919190077FE0C /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FA5248919190077FE0C /* Zip.swift */; };
+		B6379FA8248919200077FE0C /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FA7248919200077FE0C /* Subject.swift */; };
+		B6379FAA248919270077FE0C /* Relay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FA9248919270077FE0C /* Relay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +53,12 @@
 		B6379F922487D3210077FE0C /* From.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = From.swift; sourceTree = "<group>"; };
 		B6379F962487D38E0077FE0C /* DisposeBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposeBag.swift; sourceTree = "<group>"; };
 		B6379F982487D4C30077FE0C /* Disposables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disposables.swift; sourceTree = "<group>"; };
+		B6379F9D248918F40077FE0C /* MapError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapError.swift; sourceTree = "<group>"; };
+		B6379FA12489190A0077FE0C /* FlatMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatMap.swift; sourceTree = "<group>"; };
+		B6379FA3248919120077FE0C /* CombineLatest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineLatest.swift; sourceTree = "<group>"; };
+		B6379FA5248919190077FE0C /* Zip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zip.swift; sourceTree = "<group>"; };
+		B6379FA7248919200077FE0C /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
+		B6379FA9248919270077FE0C /* Relay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +125,12 @@
 				B6379F8D2486874B0077FE0C /* Map.swift */,
 				B6379F8F2487CB120077FE0C /* Just.swift */,
 				B6379F922487D3210077FE0C /* From.swift */,
+				B6379F9D248918F40077FE0C /* MapError.swift */,
+				B6379FA12489190A0077FE0C /* FlatMap.swift */,
+				B6379FA3248919120077FE0C /* CombineLatest.swift */,
+				B6379FA5248919190077FE0C /* Zip.swift */,
+				B6379FA7248919200077FE0C /* Subject.swift */,
+				B6379FA9248919270077FE0C /* Relay.swift */,
 			);
 			path = Operators;
 			sourceTree = "<group>";
@@ -248,12 +266,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6379F932487D3210077FE0C /* From.swift in Sources */,
+				B6379FA8248919200077FE0C /* Subject.swift in Sources */,
+				B6379FAA248919270077FE0C /* Relay.swift in Sources */,
 				B6379F992487D4C30077FE0C /* Disposables.swift in Sources */,
 				B6379F8E2486874B0077FE0C /* Map.swift in Sources */,
 				B6379F8824867D140077FE0C /* Observable.swift in Sources */,
 				B6379F8A24867D1B0077FE0C /* Event.swift in Sources */,
+				B6379F9E248918F40077FE0C /* MapError.swift in Sources */,
+				B6379FA4248919120077FE0C /* CombineLatest.swift in Sources */,
 				B6379F972487D38E0077FE0C /* DisposeBag.swift in Sources */,
 				B6379F8624867D0F0077FE0C /* Observer.swift in Sources */,
+				B6379FA22489190A0077FE0C /* FlatMap.swift in Sources */,
+				B6379FA6248919190077FE0C /* Zip.swift in Sources */,
 				B6379F902487CB120077FE0C /* Just.swift in Sources */,
 				B6379F8C24867D240077FE0C /* Disposable.swift in Sources */,
 			);
