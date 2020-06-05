@@ -25,8 +25,6 @@ class reactiveTests: XCTestCase {
             .create { (observer) -> Disposable in
                 for item in items {
                     observer.onNext(item)
-                    Thread.sleep(forTimeInterval: 1)
-                    print("sleep 1")
                 }
                 observer.onCompleted()
                 return Disposables.create()
@@ -39,7 +37,6 @@ class reactiveTests: XCTestCase {
             })
             .disposed(by: disposeBag)
 
-        print("outside")
         wait(for: [expectation], timeout: 5.0)
     }
 
@@ -62,15 +59,6 @@ class reactiveTests: XCTestCase {
         disposeBag = DisposeBag()
         XCTAssertEqual(disposable.isDisposed, true)
     }
-}
-
-class reactiveOperatorsTests: XCTestCase {
-    var disposeBag = DisposeBag()
-
-    override func tearDown() {
-        super.tearDown()
-        self.disposeBag = DisposeBag()
-    }
 
     func testJust() throws {
         var result = [Int]()
@@ -92,17 +80,30 @@ class reactiveOperatorsTests: XCTestCase {
         disposeBag = DisposeBag()
         XCTAssertEqual(disposable.isDisposed, true)
     }
+}
+
+class reactiveOperatorsTests: XCTestCase {
+    var disposeBag = DisposeBag()
+
+    override func tearDown() {
+        super.tearDown()
+        self.disposeBag = DisposeBag()
+    }
 
     func testFrom() throws {
         let items = [2, 4, 6]
         var result = [Int]()
+        let expectation = XCTestExpectation(description: "from")
         Observable.from(items)
             .subscribe(onNext: { (value) in
                 result.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result, items)
+                expectation.fulfill()
             })
             .disposed(by: disposeBag)
 
-        XCTAssertEqual(result, items)
+        wait(for: [expectation], timeout: 3.0)
     }
 
     func testMap() throws {
@@ -123,11 +124,12 @@ class reactiveOperatorsTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
 
+    private enum ReactiveError: Error {
+        case foo
+        case bar
+    }
+
     func testMapError() throws {
-        enum ReactiveError: Error {
-            case foo
-            case bar
-        }
         var result = [Int]()
         let expectation = XCTestExpectation(description: "observable map error")
         Observable<Int>
@@ -169,5 +171,97 @@ class reactiveOperatorsTests: XCTestCase {
             .disposed(by: disposeBag)
 
             wait(for: [expectation], timeout: 3.0)
+    }
+
+    func testDebug() throws {
+        let items = [1, 2, 3]
+        var result1 = [Int]()
+        let expectation1 = XCTestExpectation(description: "observable debug")
+
+        Observable.from(items)
+            .debug("debug test 1")
+            .map { $0 * $0 }
+            .debug("debug test 2")
+            .subscribe(onNext: { (value) in
+                result1.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result1, items.map { $0 * $0 })
+                expectation1.fulfill()
+            }, onDisposed: {
+                NSLog("debug disposed")
+            })
+            .disposed(by: disposeBag)
+
+        let expectation2 = XCTestExpectation(description: "observable debug")
+        var result2 = [Int]()
+
+        Observable<Int>
+            .create { (observer) -> Disposable in
+                observer.onNext(1)
+                observer.onError(ReactiveError.foo)
+                observer.onNext(2)
+                observer.onCompleted()
+                return Disposables.create()
+            }
+            .debug("debug test 2")
+            .subscribe(onNext: { (value) in
+                result2.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result2, [1, 2])
+                expectation2.fulfill()
+            }, onDisposed: {
+                NSLog("debug disposed")
+            })
+            .disposed(by: disposeBag)
+
+        wait(for: [expectation1, expectation2], timeout: 5.0)
+    }
+
+    func testCombineLatestWithDelay() throws {
+        let items1 = [1, 2, 3, 4]
+        let items2 = [10, 20, 30, 40]
+        var result1 = [Int]()
+        let expectation = XCTestExpectation(description: "combineLatest")
+
+        let a = Observable.from(items1)
+        let b = Observable.from(items2)
+
+        Observable<(Int, Int)>.combineLatest(
+            a,
+            b.delay(.milliseconds(100))
+        )
+            .debug("combinelatest")
+            .map { arg -> Int in
+                let (x, y) = arg
+                return x + y
+            }
+            .subscribe(onNext: { (value) in
+                result1.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result1, [14, 24, 34, 44])
+                expectation.fulfill()
+            })
+            .disposed(by: disposeBag)
+
+        var result2 = [Int]()
+
+        Observable<(Int, Int)>.combineLatest(
+            a.delay(.milliseconds(100)),
+            b
+        )
+            .debug("combinelatest")
+            .map { arg -> Int in
+                let (x, y) = arg
+                return x + y
+            }
+            .subscribe(onNext: { (value) in
+                result2.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result2, [41, 42, 43, 44])
+                expectation.fulfill()
+            })
+            .disposed(by: disposeBag)
+
+        wait(for: [expectation], timeout: 5.0)
     }
 }

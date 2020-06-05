@@ -11,12 +11,24 @@ import Foundation
 protocol SchedulerType {
     var queue: DispatchQueue { get }
     func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable
+    func schedule<StateType>(_ state: StateType, after delay: DispatchTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable
 }
 
 extension SchedulerType {
     func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
         let disposable = SingleDisposable()
         self.queue.async {
+            if disposable.isDisposed {
+                return
+            }
+            disposable.setDisposable(action(state))
+        }
+        return disposable
+    }
+
+    func schedule<StateType>(_ state: StateType, after delay: DispatchTimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
+        let disposable = SingleDisposable()
+        self.queue.asyncAfter(deadline: .now() + delay) {
             if disposable.isDisposed {
                 return
             }
@@ -79,7 +91,7 @@ final class SingleDisposable: Disposable {
     }
 
     func dispose() {
-        guard let disposable = self.disposable else { fatalError("self.disposable has not been set") }
+        guard let disposable = self.disposable else { fatalError("disposable has not been set") }
         disposable.dispose()
         self.disposable = nil
     }

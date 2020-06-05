@@ -71,9 +71,9 @@ class Observable<E>: ObservableType {
     }
 
     func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.Element == Element {
-//        return scheduler.schedule(()) { (_) -> Disposable in
+        return scheduler.schedule(()) { (_) -> Disposable in
             return self.subscriptionHandler(Observer(observer))
-//        }
+        }
     }
 }
 
