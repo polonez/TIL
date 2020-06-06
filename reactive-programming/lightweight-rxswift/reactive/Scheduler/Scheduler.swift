@@ -40,7 +40,7 @@ extension SchedulerType {
 
 class CurrentThreadScheduler: SchedulerType {
     var queue: DispatchQueue {
-        OperationQueue.current!.underlyingQueue!
+        return OperationQueue.current!.underlyingQueue!
     }
 }
 
@@ -91,7 +91,7 @@ final class SingleDisposable: Disposable {
     }
 
     func dispose() {
-        guard let disposable = self.disposable else { fatalError("disposable has not been set") }
+        guard let disposable = self.disposable else { return; fatalError("disposable has not been set") }
         disposable.dispose()
         self.disposable = nil
     }

@@ -14,12 +14,10 @@ extension ObservableType {
     }
 }
 
-private final class Delay<E>: Observable<E> {
-    typealias Element = E
-
+private final class Delay<Element>: Observable<Element> {
     private let scheduler: SchedulerType
 
-    init(source: Observable<E>, timeInterval: DispatchTimeInterval, on scheduler: SchedulerType) {
+    init(source: Observable<Element>, timeInterval: DispatchTimeInterval, on scheduler: SchedulerType) {
         self.scheduler = scheduler
         let subscriptionHandler: SubscriptionHandler = { observer in
             return scheduler.schedule((), after: timeInterval) { (_) -> Disposable in

@@ -58,15 +58,15 @@ extension ObservableType {
     }
 }
 
-class Observable<E>: ObservableType {
-    typealias Element = E
+class Observable<Element>: ObservableType {
     typealias SubscriptionHandler = ((Observer<Element>) -> Disposable)
 
-    private let subscriptionHandler: SubscriptionHandler
-    private let scheduler: SchedulerType
+    fileprivate let subscriptionHandler: SubscriptionHandler
+    fileprivate let scheduler: SchedulerType
 
     init(_ subscriptionHandler: @escaping SubscriptionHandler, scheduler: SchedulerType = CurrentThreadScheduler()) {
         self.subscriptionHandler = subscriptionHandler
+//        self.scheduler = Scheduler(queue: DispatchQueue.init(label: "random", qos: .background, autoreleaseFrequency: .workItem))
         self.scheduler = scheduler
     }
 
@@ -78,8 +78,7 @@ class Observable<E>: ObservableType {
 }
 
 extension Observable {
-    func asObservable() -> Observable<E> {
+    func asObservable() -> Observable<Element> {
         return self
     }
 }
-
