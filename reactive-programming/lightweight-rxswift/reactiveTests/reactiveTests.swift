@@ -386,4 +386,49 @@ class reactiveOperatorsTests: XCTestCase {
 
         wait(for: [expectation], timeout: 5.0)
     }
+
+    func testFlatMap() throws {
+        let items1 = [0, 0]
+        let items2 = [1, 2, 3, 4, 5]
+        var result = [Int]()
+        let expectation = XCTestExpectation(description: "zip")
+
+        let other = Observable.from(items2)
+
+        Observable.from(items1)
+            .flatMap(other)
+            .subscribe(onNext: { (value) in
+                result.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result, items2)
+                expectation.fulfill()
+            })
+            .disposed(by: disposeBag)
+
+        wait(for: [expectation], timeout: 5.0)
+    }
+
+    func testFlatMap2() throws {
+        let items1 = [0, 0]
+        let items2 = [1, 2, 3, 4]
+        let items3 = [10, 20, 30, 40, 50]
+        var result = [Int]()
+        let expectation = XCTestExpectation(description: "zip")
+
+        let other2 = Observable.from(items2)
+        let other3 = Observable.from(items3)
+
+        Observable.from(items1)
+            .flatMap(other2)
+            .flatMap(other3)
+            .subscribe(onNext: { (value) in
+                result.append(value)
+            }, onCompleted: {
+                XCTAssertEqual(result, items3)
+                expectation.fulfill()
+            })
+            .disposed(by: disposeBag)
+
+        wait(for: [expectation], timeout: 5.0)
+    }
 }
