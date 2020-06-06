@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+final class PublishRelay<Element>: Observable<Element> {
+
+}

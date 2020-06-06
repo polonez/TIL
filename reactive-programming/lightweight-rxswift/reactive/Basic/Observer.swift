@@ -46,3 +46,4 @@ class Observer<E>: ObserverType {
         eventHandler(event)
     }
 }
+

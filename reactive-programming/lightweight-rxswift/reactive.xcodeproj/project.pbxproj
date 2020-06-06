@@ -32,6 +32,8 @@
 		B6379FB5248B232F0077FE0C /* Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FB4248B232F0077FE0C /* Interval.swift */; };
 		B6379FB7248B23430077FE0C /* Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FB6248B23430077FE0C /* Prefix.swift */; };
 		B6379FB9248B23480077FE0C /* Suffix.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FB8248B23470077FE0C /* Suffix.swift */; };
+		B6379FBB248B8D190077FE0C /* Single.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FBA248B8D190077FE0C /* Single.swift */; };
+		B6379FBD248B8D1F0077FE0C /* Maybe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6379FBC248B8D1F0077FE0C /* Maybe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		B6379FB4248B232F0077FE0C /* Interval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interval.swift; sourceTree = "<group>"; };
 		B6379FB6248B23430077FE0C /* Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefix.swift; sourceTree = "<group>"; };
 		B6379FB8248B23470077FE0C /* Suffix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suffix.swift; sourceTree = "<group>"; };
+		B6379FBA248B8D190077FE0C /* Single.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Single.swift; sourceTree = "<group>"; };
+		B6379FBC248B8D1F0077FE0C /* Maybe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maybe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,14 +148,16 @@
 				B6379FA3248919120077FE0C /* CombineLatest.swift */,
 				B6379FA5248919190077FE0C /* Zip.swift */,
 				B6379FA12489190A0077FE0C /* FlatMap.swift */,
-				B6379FA7248919200077FE0C /* Subject.swift */,
-				B6379FA9248919270077FE0C /* Relay.swift */,
 				B6379FAE248948100077FE0C /* Delay.swift */,
 				B6379FB024894F340077FE0C /* Debug.swift */,
-				B6379FB2248A97190077FE0C /* ObserveOn.swift */,
-				B6379FB4248B232F0077FE0C /* Interval.swift */,
 				B6379FB6248B23430077FE0C /* Prefix.swift */,
 				B6379FB8248B23470077FE0C /* Suffix.swift */,
+				B6379FB4248B232F0077FE0C /* Interval.swift */,
+				B6379FB2248A97190077FE0C /* ObserveOn.swift */,
+				B6379FA7248919200077FE0C /* Subject.swift */,
+				B6379FA9248919270077FE0C /* Relay.swift */,
+				B6379FBA248B8D190077FE0C /* Single.swift */,
+				B6379FBC248B8D1F0077FE0C /* Maybe.swift */,
 			);
 			path = Operators;
 			sourceTree = "<group>";
@@ -298,6 +304,7 @@
 				B6379FB3248A97190077FE0C /* ObserveOn.swift in Sources */,
 				B6379FA8248919200077FE0C /* Subject.swift in Sources */,
 				B6379FAA248919270077FE0C /* Relay.swift in Sources */,
+				B6379FBD248B8D1F0077FE0C /* Maybe.swift in Sources */,
 				B6379FB7248B23430077FE0C /* Prefix.swift in Sources */,
 				B6379FB9248B23480077FE0C /* Suffix.swift in Sources */,
 				B6379F992487D4C30077FE0C /* Disposables.swift in Sources */,
@@ -306,6 +313,7 @@
 				B6379F8A24867D1B0077FE0C /* Event.swift in Sources */,
 				B6379F9E248918F40077FE0C /* MapError.swift in Sources */,
 				B6379FA4248919120077FE0C /* CombineLatest.swift in Sources */,
+				B6379FBB248B8D190077FE0C /* Single.swift in Sources */,
 				B6379FB5248B232F0077FE0C /* Interval.swift in Sources */,
 				B6379FAD24893D3F0077FE0C /* Scheduler.swift in Sources */,
 				B6379F972487D38E0077FE0C /* DisposeBag.swift in Sources */,
