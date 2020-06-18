@@ -29,7 +29,7 @@ def find_next(num, seq):
     m = 10000
     m_idx = 0
     for idx, item in enumerate(seq):
-        if item > num and item < m:
+        if item > num and item <= m:
             m = item
             m_idx = idx
     return m_idx
@@ -37,7 +37,7 @@ def find_next(num, seq):
 def is_decreasing(seq):
     last = seq[0] + 1
     for item in seq:
-        if last > item:
+        if last >= item:
             last = item
         else:
             return False
