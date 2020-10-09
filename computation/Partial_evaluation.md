@@ -43,5 +43,6 @@ PE\*\*(PE\*, PE) = compiler-generator, compiler-generator(interpreter) = compile
 - https://en.wikipedia.org/wiki/Partial_evaluation
 - https://kldp.org/node/105142
 - https://gist.github.com/tomykaira/3159910
+- http://blog.sigfpe.com/2009/05/three-projections-of-doctor-futamura.html
 - PyPy project
 - Futamura projection
