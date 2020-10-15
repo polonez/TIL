@@ -1,12 +1,15 @@
 def next_permutation(seq):
     """(stateless) next permutation O(n)"""
     pos = 0
-    for idx in range(len(seq)-1, -1, -1):
-        subseq = seq[idx:]
-        if is_decreasing(subseq):
+    last = seq[-1]
+    for idx, item in enumerate(reversed(seq)):
+        if item >= last:
             pos = idx
+            last = item
         else:
             break
+
+    pos = len(seq) - 1 - pos
 
     subseq = seq[pos:]
 
@@ -34,14 +37,6 @@ def find_next(num, seq):
             m_idx = idx
     return m_idx
 
-def is_decreasing(seq):
-    last = seq[0] + 1
-    for item in seq:
-        if last >= item:
-            last = item
-        else:
-            return False
-    return True
 
 test_input = list(range(1, 5))
 seq = sorted(test_input)
